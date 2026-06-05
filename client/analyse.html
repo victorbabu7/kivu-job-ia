@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analyser mon CV — Kivu Job IA</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* Tabs offre — même comportement que .tab-content */
+    .tab-offre-content { display: none; }
+    .tab-offre-content.active { display: block; }
+  </style>
+</head>
+<body class="page-light">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-light">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">💼 Kivu<span> Job IA</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Fonctionnalités</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <a href="index.html" class="btn-cta">Accueil</a>
+      <button class="burger" id="burger">&#9776;</button>
+    </div>
+    <ul class="nav-mobile" id="navMobile">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <span class="hero-badge">Étape 1 sur 3</span>
+      <h1>Analysez votre CV</h1>
+      <p>Soumettez votre CV et l'offre d'emploi — notre IA fait le reste en moins de 3 minutes.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-steps">
+    <div class="container">
+      <div class="steps-bar">
+        <div class="sbar-step active"><div class="sbar-dot">1</div><span>Soumettre</span></div>
+        <div class="sbar-line"></div>
+        <div class="sbar-step"><div class="sbar-dot">2</div><span>Analyse</span></div>
+        <div class="sbar-line"></div>
+        <div class="sbar-step"><div class="sbar-dot">3</div><span>Résultats</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN FORM -->
+  <section class="analyse-section">
+    <div class="container">
+      <div class="analyse-grid">
+
+        <!-- COL 1 : CV -->
+        <div class="analyse-col">
+          <div class="col-header">
+            <div class="col-icon">📄</div>
+            <div>
+              <h2>Votre CV</h2>
+              <p>Uploadez ou collez votre CV</p>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <button class="tab active" data-tab="upload">📎 Upload fichier</button>
+            <button class="tab" data-tab="text">📋 Coller / Rédiger</button>
+          </div>
+
+          <!-- Tab: Upload -->
+          <div class="tab-content active" id="tab-upload">
+            <div class="dropzone" id="dropzone">
+              <div class="drop-icon">☁️</div>
+              <p><strong>Glissez votre fichier ici</strong></p>
+              <p class="drop-sub">PDF ou DOCX — max 5MB</p>
+              <input type="file" id="fileInput" accept=".pdf,.docx" hidden/>
+              <button class="btn-outline-green" onclick="document.getElementById('fileInput').click()">Choisir un fichier</button>
+              <div class="file-name" id="fileName"></div>
+            </div>
+          </div>
+
+          <!-- Tab: Coller / Rédiger (fusionné) -->
+          <div class="tab-content" id="tab-text">
+            <textarea class="big-textarea" id="cvText"
+              placeholder="Collez votre CV ici, ou rédigez-le directement.&#10;&#10;Exemple :&#10;Nom : Jean Dupont&#10;Poste visé : Développeur Web&#10;Expériences : ...&#10;Compétences : ..."></textarea>
+          </div>
+        </div>
+
+        <!-- COL 2 : Offre d'emploi -->
+        <div class="analyse-col">
+          <div class="col-header">
+            <div class="col-icon">🎯</div>
+            <div>
+              <h2>L'offre d'emploi</h2>
+              <p>Uploadez ou collez l'offre qui vous intéresse</p>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <button class="tab-offre active" data-offre="offre-upload">📎 Upload fichier</button>
+            <button class="tab-offre" data-offre="offre-text">📋 Coller / Rédiger</button>
+          </div>
+
+          <!-- Tab: Upload offre -->
+          <div class="tab-offre-content active" id="offre-upload">
+            <div class="dropzone" id="dropzoneOffre">
+              <div class="drop-icon">☁️</div>
+              <p><strong>Glissez votre fichier ici</strong></p>
+              <p class="drop-sub">PDF ou DOCX — max 5MB</p>
+              <input type="file" id="fileOffre" accept=".pdf,.docx" hidden/>
+              <button class="btn-outline-green" onclick="document.getElementById('fileOffre').click()">Choisir un fichier</button>
+              <div class="file-name" id="fileOffreName"></div>
+            </div>
+          </div>
+
+          <!-- Tab: Coller / Rédiger offre (fusionné) -->
+          <div class="tab-offre-content" id="offre-text">
+            <textarea class="big-textarea tall" id="offreText"
+              placeholder="Collez l'offre d'emploi ici, ou rédigez-la.&#10;&#10;Exemple :&#10;Titre : Développeur Node.js&#10;Missions : ...&#10;Compétences requises : ...&#10;Profil recherché : ..."></textarea>
+          </div>
+
+          <div class="offre-tips">
+            <p>💡 <strong>Conseil :</strong> Plus l'offre est complète, plus l'analyse sera précise.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+        <button class="btn-primary large btn-analyse" id="btnAnalyse">
+          <span id="btnText">🔍 Lancer l'analyse IA</span>
+          <span id="btnLoader" class="btn-loader hidden">⏳ Analyse en cours...</span>
+        </button>
+        <p class="submit-note">Gratuit · Sécurisé · Résultats en moins de 3 minutes</p>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <script src="js/main.js"></script>
+</body>
+</html>

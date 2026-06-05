@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Régénérer mon CV — Kivu Job IA</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="page-light">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-light">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">💼 Kivu<span> Job IA</span></a>
+      <ul class="nav-links">
+        <li><a href="resultats.html">← Résultats</a></li>
+      </ul>
+      <a href="analyse.html" class="btn-cta">Nouvelle analyse</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <span class="hero-badge">Étape 3 sur 3</span>
+      <h1>Régénérez votre CV</h1>
+      <p>Choisissez vos sections, ajoutez vos informations et laissez l'IA créer votre CV parfait.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-steps">
+    <div class="container">
+      <div class="steps-bar">
+        <div class="sbar-step done"><div class="sbar-dot">✓</div><span>Soumettre</span></div>
+        <div class="sbar-line active-line"></div>
+        <div class="sbar-step done"><div class="sbar-dot">✓</div><span>Résultats</span></div>
+        <div class="sbar-line active-line"></div>
+        <div class="sbar-step active"><div class="sbar-dot">3</div><span>CV Final</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="regen-page">
+    <div class="container">
+
+      <!-- ÉTAPE 1 : SECTIONS -->
+      <div class="regen-step" id="step1">
+        <div class="step-header">
+          <div class="step-badge">Étape 1</div>
+          <h2>Choisissez les sections de votre CV</h2>
+          <p>Cochez les sections que vous voulez inclure dans votre CV final.</p>
+        </div>
+        <div class="sections-grid">
+          <label class="section-check required">
+            <input type="checkbox" checked disabled/>
+            <div class="check-card">
+              <span class="check-icon">👤</span>
+              <span class="check-label">Informations personnelles</span>
+              <span class="check-required">Obligatoire</span>
+            </div>
+          </label>
+          <label class="section-check required">
+            <input type="checkbox" checked disabled/>
+            <div class="check-card">
+              <span class="check-icon">📝</span>
+              <span class="check-label">Profil / Résumé</span>
+              <span class="check-required">Obligatoire</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" checked name="section" value="experiences"/>
+            <div class="check-card">
+              <span class="check-icon">💼</span>
+              <span class="check-label">Expériences professionnelles</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" checked name="section" value="formation"/>
+            <div class="check-card">
+              <span class="check-icon">🎓</span>
+              <span class="check-label">Formation</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" checked name="section" value="competences"/>
+            <div class="check-card">
+              <span class="check-icon">⚡</span>
+              <span class="check-label">Compétences</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" checked name="section" value="langues"/>
+            <div class="check-card">
+              <span class="check-icon">🌍</span>
+              <span class="check-label">Langues</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="certificats"/>
+            <div class="check-card">
+              <span class="check-icon">🏆</span>
+              <span class="check-label">Certificats</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="stages"/>
+            <div class="check-card">
+              <span class="check-icon">🔬</span>
+              <span class="check-label">Stages</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="benevolat"/>
+            <div class="check-card">
+              <span class="check-icon">🤝</span>
+              <span class="check-label">Bénévolat</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="projets"/>
+            <div class="check-card">
+              <span class="check-icon">🚀</span>
+              <span class="check-label">Projets personnels</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="references"/>
+            <div class="check-card">
+              <span class="check-icon">👥</span>
+              <span class="check-label">Références</span>
+            </div>
+          </label>
+          <label class="section-check">
+            <input type="checkbox" name="section" value="interets"/>
+            <div class="check-card">
+              <span class="check-icon">🎯</span>
+              <span class="check-label">Mais aussi…</span>
+            </div>
+          </label>
+        </div>
+        <div class="step-nav">
+          <button class="btn-primary" onclick="goStep(2)">Continuer →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 : INFORMATIONS -->
+      <div class="regen-step hidden" id="step2">
+        <div class="step-header">
+          <div class="step-badge">Étape 2</div>
+          <h2>Vérifiez et complétez vos informations</h2>
+          <p>L'IA a extrait ces informations de votre CV. Corrigez ou ajoutez ce qui manque.</p>
+        </div>
+
+        <div class="info-grid">
+
+          <!-- Infos personnelles -->
+          <div class="info-section">
+            <h3>👤 Informations personnelles</h3>
+            <div class="form-row">
+              <div class="form-group"><label>Nom complet</label><input type="text" id="i-nom" placeholder="Votre nom complet"/></div>
+              <div class="form-group"><label>Titre du poste visé</label><input type="text" id="i-titre" placeholder="Ex: Développeur Full Stack"/></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Email</label><input type="email" id="i-email" placeholder="email@example.com"/></div>
+              <div class="form-group"><label>Téléphone</label><input type="text" id="i-tel" placeholder="+243 ..."/></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Ville / Pays</label><input type="text" id="i-ville" placeholder="Goma, RDC"/></div>
+              <div class="form-group"><label>LinkedIn (optionnel)</label><input type="text" id="i-linkedin" placeholder="linkedin.com/in/..."/></div>
+            </div>
+          </div>
+
+          <!-- Profil -->
+          <div class="info-section">
+            <h3>📝 Profil / Résumé professionnel</h3>
+            <div class="form-group">
+              <label>Résumé (2-3 phrases percutantes)</label>
+              <textarea id="i-profil" rows="3" placeholder="Décrivez votre profil en 2-3 phrases. L'IA peut aussi le rédiger automatiquement si vous laissez vide."></textarea>
+            </div>
+          </div>
+
+          <!-- Suggestions -->
+          <div class="info-section">
+            <h3>💡 Informations supplémentaires</h3>
+            <p class="info-hint">Ajoutez tout ce qui n'est pas dans votre CV original : nouvelles expériences, compétences, projets, certifications récentes...</p>
+            <div class="form-group">
+              <label>Vos suggestions et ajouts</label>
+              <textarea id="i-suggestions" rows="4" placeholder="Ex: J'ai aussi travaillé sur un projet web personnel, j'ai obtenu une certification Docker en 2024, je parle aussi portugais..."></textarea>
+            </div>
+          </div>
+
+          <!-- Langue du CV -->
+          <div class="info-section">
+            <h3>🌍 Langue du CV</h3>
+            <div class="lang-choice">
+              <label class="lang-option">
+                <input type="radio" name="cvlang" value="fr" checked/>
+                <div class="lang-card">🇫🇷 Français</div>
+              </label>
+              <label class="lang-option">
+                <input type="radio" name="cvlang" value="en"/>
+                <div class="lang-card">🇬🇧 Anglais</div>
+              </label>
+              <label class="lang-option">
+                <input type="radio" name="cvlang" value="both"/>
+                <div class="lang-card">🇫🇷🇬🇧 Les deux</div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-ghost-dark2" onclick="goStep(1)">← Retour</button>
+          <button class="btn-primary" onclick="goStep(3)">Continuer →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3 : TEMPLATE -->
+      <div class="regen-step hidden" id="step3">
+        <div class="step-header">
+          <div class="step-badge">Étape 3</div>
+          <h2>Choisissez votre template</h2>
+          <p>Sélectionnez le design qui vous correspond.</p>
+        </div>
+
+        <div class="templates-grid">
+          <label class="template-option">
+            <input type="radio" name="template" value="classique" checked/>
+            <div class="template-card">
+              <div class="template-preview t-classique">
+                <div class="tp-header" style="background:#2c3e50"></div>
+                <div class="tp-body">
+                  <div class="tp-left"></div>
+                  <div class="tp-right"></div>
+                </div>
+              </div>
+              <div class="template-name">Classique</div>
+              <div class="template-desc">Sobre · Bleu marine</div>
+            </div>
+          </label>
+
+          <label class="template-option">
+            <input type="radio" name="template" value="moderne"/>
+            <div class="template-card">
+              <div class="template-preview">
+                <div class="tp-sidebar" style="background:#2d6e52"></div>
+                <div class="tp-main"></div>
+              </div>
+              <div class="template-name">Moderne</div>
+              <div class="template-desc">Sidebar verte · Tech</div>
+            </div>
+          </label>
+
+          <label class="template-option">
+            <input type="radio" name="template" value="elegant"/>
+            <div class="template-card">
+              <div class="template-preview">
+                <div class="tp-header" style="background:#6c2a3a;height:35%"></div>
+                <div class="tp-body" style="height:65%">
+                  <div class="tp-left"></div>
+                  <div class="tp-right"></div>
+                </div>
+              </div>
+              <div class="template-name">Élégant</div>
+              <div class="template-desc">Header bordeaux · Chic</div>
+            </div>
+          </label>
+
+          <label class="template-option">
+            <input type="radio" name="template" value="professionnel"/>
+            <div class="template-card">
+              <div class="template-preview">
+                <div class="tp-sidebar" style="background:#1a1a2e"></div>
+                <div class="tp-main"></div>
+              </div>
+              <div class="template-name">Professionnel</div>
+              <div class="template-desc">Sidebar nuit · Corporate</div>
+            </div>
+          </label>
+
+          <label class="template-option">
+            <input type="radio" name="template" value="creatif"/>
+            <div class="template-card">
+              <div class="template-preview">
+                <div class="tp-header" style="background:#e67e22;height:28%"></div>
+                <div class="tp-body" style="height:72%">
+                  <div class="tp-left" style="background:#fdf6f0"></div>
+                  <div class="tp-right"></div>
+                </div>
+              </div>
+              <div class="template-name">Créatif</div>
+              <div class="template-desc">Orange · Original</div>
+            </div>
+          </label>
+
+          <label class="template-option">
+            <input type="radio" name="template" value="minimaliste"/>
+            <div class="template-card">
+              <div class="template-preview" style="padding:8px;">
+                <div style="height:2px;background:#2d3436;margin-bottom:6px;border-radius:1px;"></div>
+                <div class="tp-body">
+                  <div class="tp-left"></div>
+                  <div class="tp-right"></div>
+                </div>
+              </div>
+              <div class="template-name">Minimaliste</div>
+              <div class="template-desc">Épuré · Gris anthracite</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-ghost-dark2" onclick="goStep(2)">← Retour</button>
+          <button class="btn-primary large" id="btnGenerer" onclick="genererCV()">
+            <span id="genText">✨ Générer mon CV</span>
+            <span id="genLoader" class="btn-loader hidden">⏳ Génération en cours...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 4 : RÉSULTAT FINAL -->
+      <div class="regen-step hidden" id="step4">
+        <div class="step-header">
+          <div class="step-badge">✅ CV Prêt !</div>
+          <h2>Votre CV a été généré avec succès</h2>
+          <p>Téléchargez votre CV optimisé et candidatez avec confiance.</p>
+        </div>
+
+        <div class="cv-result-card">
+          <div class="cv-result-preview" id="cvPreview"></div>
+          <div class="cv-result-actions">
+            <button class="btn-primary large" id="btnPDF" onclick="telechargerPDF()">
+              📄 Télécharger en PDF
+            </button>
+            <button class="btn-outline-green large" id="btnDOCX" onclick="telechargerDOCX()">
+              📝 Télécharger en DOCX
+            </button>
+            <a href="analyse.html" class="btn-ghost-dark2">🔄 Nouvelle analyse</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/regenerer.js"></script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion — Kivu Job IA</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    .auth-page { min-height:100vh; display:flex; align-items:center; justify-content:center; background:#f4f6f9; padding:40px 20px; }
+    .auth-card { background:#fff; border-radius:16px; padding:40px; width:100%; max-width:440px; box-shadow:0 4px 32px rgba(0,0,0,0.1); }
+    .auth-logo { text-align:center; margin-bottom:28px; }
+    .auth-logo a { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; color:#1a1a2e; text-decoration:none; }
+    .auth-logo a span { color:var(--green,#3dbd8a); }
+    .auth-tabs { display:flex; background:#f4f6f9; border-radius:10px; padding:4px; margin-bottom:28px; }
+    .auth-tab { flex:1; padding:10px; text-align:center; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; color:#888; border:none; background:transparent; transition:all .2s; }
+    .auth-tab.active { background:#fff; color:#1a1a2e; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+    .auth-step { display:none; }
+    .auth-step.active { display:block; }
+    .form-title { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; color:#1a1a2e; margin-bottom:6px; }
+    .form-sub { font-size:13px; color:#888; margin-bottom:24px; line-height:1.5; }
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:13px; font-weight:500; color:#444; margin-bottom:6px; }
+    .form-group input { width:100%; padding:11px 14px; border:1.5px solid #e0e0e0; border-radius:8px; font-size:14px; font-family:'Inter',sans-serif; color:#1a1a2e; background:#fafafa; transition:border-color .2s; box-sizing:border-box; }
+    .form-group input:focus { outline:none; border-color:var(--green,#3dbd8a); background:#fff; }
+    .otp-inputs { display:flex; gap:12px; justify-content:center; margin:20px 0; }
+    .otp-inputs input { width:58px; height:62px; text-align:center; font-size:26px; font-weight:700; border:2px solid #e0e0e0; border-radius:10px; color:#1a1a2e; background:#fafafa; transition:border-color .2s; font-family:'Syne',sans-serif; }
+    .otp-inputs input:focus { outline:none; border-color:var(--green,#3dbd8a); }
+    .otp-inputs input.filled { border-color:var(--green,#3dbd8a); background:#f0fdf8; }
+    .btn-auth { width:100%; padding:13px; background:var(--green,#3dbd8a); color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:600; font-family:'Syne',sans-serif; cursor:pointer; transition:background .2s; margin-top:8px; }
+    .btn-auth:hover { background:#31a87a; }
+    .btn-auth:disabled { background:#a0d9c0; cursor:not-allowed; }
+    .btn-secondary { width:100%; padding:11px; background:transparent; border:1.5px solid #e0e0e0; border-radius:10px; font-size:14px; cursor:pointer; color:#555; font-family:'Inter',sans-serif; margin-top:8px; }
+    .auth-msg { padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:14px; display:none; }
+    .auth-msg.error   { background:#fef2f2; color:#e53e3e; border:1px solid #fed7d7; display:block; }
+    .auth-msg.success { background:#f0fff4; color:#276749; border:1px solid #c6f6d5; display:block; }
+    .divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:#eee; }
+    .divider span { font-size:12px; color:#bbb; }
+    .btn-google { width:100%; padding:11px; background:#fff; border:1.5px solid #e0e0e0; border-radius:10px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; color:#444; font-family:'Inter',sans-serif; }
+    .btn-google:hover { border-color:#aaa; }
+    .btn-google svg { width:18px; height:18px; }
+    .switch-text { text-align:center; font-size:13px; color:#888; margin-top:20px; }
+    .switch-text a { color:var(--green,#3dbd8a); cursor:pointer; font-weight:500; }
+    .password-wrap { position:relative; }
+    .password-wrap input { padding-right:42px; }
+    .toggle-pw { position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:16px; color:#888; background:none; border:none; }
+    .strength-bar { height:4px; border-radius:2px; background:#eee; margin-top:6px; }
+    .strength-fill { height:100%; border-radius:2px; transition:width .3s,background .3s; width:0; }
+    .resend-row { text-align:center; font-size:13px; color:#888; margin-top:14px; }
+    .resend-row a { color:var(--green,#3dbd8a); cursor:pointer; font-weight:500; }
+    .resend-row a.disabled { color:#bbb; pointer-events:none; }
+    .timer { color:#e53e3e; font-weight:500; }
+    .email-display { font-weight:600; color:#1a1a2e; }
+  </style>
+</head>
+<body class="page-light">
+
+  <nav class="navbar navbar-light">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">💼 Kivu<span> Job IA</span></a>
+      <a href="index.html" class="btn-cta">Accueil</a>
+    </div>
+  </nav>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo"><a href="index.html">💼 Kivu<span> Job IA</span></a></div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchMode('login')">Se connecter</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchMode('register')">Créer un compte</button>
+      </div>
+
+      <div class="auth-msg" id="authMsg"></div>
+
+      <!-- CONNEXION -->
+      <div id="mode-login">
+        <div class="auth-step active" id="login-step1">
+          <div class="form-title">Bon retour ! 👋</div>
+          <div class="form-sub">Connectez-vous pour accéder à vos CVs.</div>
+          <div class="form-group">
+            <label>Adresse email</label>
+            <input type="email" id="loginEmail" placeholder="votre@email.com"/>
+          </div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <div class="password-wrap">
+              <input type="password" id="loginPassword" placeholder="••••••••"/>
+              <button class="toggle-pw" onclick="togglePw('loginPassword',this)">👁</button>
+            </div>
+          </div>
+          <div style="text-align:right;margin:-8px 0 16px">
+            <a href="#" style="font-size:12px;color:var(--green,#3dbd8a)" onclick="switchMode('forgot')">Mot de passe oublié ?</a>
+          </div>
+          <button class="btn-auth" id="btnLogin" onclick="login()">Se connecter</button>
+          <div class="divider"><span>ou</span></div>
+          <button class="btn-google" onclick="loginGoogle()">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continuer avec Google
+          </button>
+          <div class="switch-text">Pas de compte ? <a onclick="switchMode('register')">Créer un compte</a></div>
+        </div>
+      </div>
+
+      <!-- INSCRIPTION -->
+      <div id="mode-register" style="display:none">
+        <!-- Étape 1 : infos -->
+        <div class="auth-step active" id="register-step1">
+          <div class="form-title">Créer un compte</div>
+          <div class="form-sub">Rejoignez Kivu Job IA gratuitement.</div>
+          <div class="form-group"><label>Nom complet</label><input type="text" id="regName" placeholder="Jean Dupont"/></div>
+          <div class="form-group"><label>Adresse email</label><input type="email" id="regEmail" placeholder="votre@email.com"/></div>
+          <div class="form-group"><label>Date de naissance</label><input type="date" id="regBirth"/></div>
+          <div class="form-group"><label>Pays</label><input type="text" id="regCountry" placeholder="Ex: RD Congo"/></div>
+          <div class="form-group">
+            <label>Mot de passe</label>
+            <div class="password-wrap">
+              <input type="password" id="regPassword" placeholder="Minimum 6 caractères" oninput="checkStrength(this.value)"/>
+              <button class="toggle-pw" onclick="togglePw('regPassword',this)">👁</button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          </div>
+          <div class="form-group"><label>Question de sécurité</label><input type="text" id="regQuestion" placeholder="Ex: Nom de votre animal ?"/></div>
+          <div class="form-group"><label>Réponse secrète</label><input type="text" id="regAnswer" placeholder="Votre réponse"/></div>
+          <button class="btn-auth" onclick="sendRegisterOTP()">Continuer →</button>
+          <div class="divider"><span>ou</span></div>
+          <button class="btn-google" onclick="loginGoogle()">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continuer avec Google
+          </button>
+          <div class="switch-text">Déjà un compte ? <a onclick="switchMode('login')">Se connecter</a></div>
+        </div>
+        <!-- Étape 2 : OTP -->
+        <div class="auth-step" id="register-step2">
+          <div class="form-title">Vérifiez votre email 📬</div>
+          <div class="form-sub">Code envoyé à <span class="email-display" id="otpEmailDisplay"></span>. Entrez les 4 chiffres.</div>
+          <div class="otp-inputs">
+            <input type="number" class="otp-box" min="0" max="9" oninput="otpInput(this,0)"/>
+            <input type="number" class="otp-box" min="0" max="9" oninput="otpInput(this,1)"/>
+            <input type="number" class="otp-box" min="0" max="9" oninput="otpInput(this,2)"/>
+            <input type="number" class="otp-box" min="0" max="9" oninput="otpInput(this,3)"/>
+          </div>
+          <button class="btn-auth" onclick="verifyOTPAndRegister()">Vérifier et créer mon compte</button>
+          <button class="btn-secondary" onclick="showStep('register',1)">← Modifier mon email</button>
+          <div class="resend-row">Pas reçu ? <a id="resendBtn" onclick="resendOTP()">Renvoyer</a> <span id="timerDisplay"></span></div>
+        </div>
+      </div>
+
+      <!-- MOT DE PASSE OUBLIÉ -->
+      <div id="mode-forgot" style="display:none">
+        <!-- Étape 1 -->
+        <div class="auth-step active" id="forgot-step1">
+          <div class="form-title">Mot de passe oublié 🔑</div>
+          <div class="form-sub">Entrez votre email — nous vous envoyons un code.</div>
+          <div class="form-group"><label>Adresse email</label><input type="email" id="forgotEmail" placeholder="votre@email.com"/></div>
+          <button class="btn-auth" onclick="sendForgotOTP()">Envoyer le code</button>
+          <button class="btn-secondary" onclick="switchMode('login')">← Retour</button>
+        </div>
+        <!-- Étape 2 : OTP -->
+        <div class="auth-step" id="forgot-step2">
+          <div class="form-title">Entrez le code 🔐</div>
+          <div class="form-sub">Code envoyé à <span class="email-display" id="forgotEmailDisplay"></span>.</div>
+          <div class="otp-inputs">
+            <input type="number" class="otp-box-f" min="0" max="9" oninput="otpInput(this,0,'f')"/>
+            <input type="number" class="otp-box-f" min="0" max="9" oninput="otpInput(this,1,'f')"/>
+            <input type="number" class="otp-box-f" min="0" max="9" oninput="otpInput(this,2,'f')"/>
+            <input type="number" class="otp-box-f" min="0" max="9" oninput="otpInput(this,3,'f')"/>
+          </div>
+          <button class="btn-auth" onclick="verifyForgotOTP()">Vérifier le code</button>
+          <button class="btn-secondary" onclick="showStep('forgot',1)">← Changer l'email</button>
+        </div>
+        <!-- Étape 3 : nouveau mot de passe -->
+        <div class="auth-step" id="forgot-step3">
+          <div class="form-title">Nouveau mot de passe 🔒</div>
+          <div class="form-sub">Choisissez un mot de passe sécurisé.</div>
+          <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <div class="password-wrap">
+              <input type="password" id="newPassword" placeholder="Minimum 6 caractères"/>
+              <button class="toggle-pw" onclick="togglePw('newPassword',this)">👁</button>
+            </div>
+          </div>
+          <div class="form-group"><label>Confirmer</label><input type="password" id="confirmPassword" placeholder="Répétez le mot de passe"/></div>
+          <button class="btn-auth" onclick="doUpdatePassword()">Enregistrer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, updatePassword as fbUpdatePw } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ⚠️ REMPLACEZ PAR VOTRE CONFIG FIREBASE
+    const firebaseConfig = {
+      apiKey           : "VOTRE_API_KEY",
+      authDomain       : "kivujobia.firebaseapp.com",
+      projectId        : "kivujobia",
+      storageBucket    : "kivujobia.appspot.com",
+      messagingSenderId: "VOTRE_SENDER_ID",
+      appId            : "VOTRE_APP_ID"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const gProvider = new GoogleAuthProvider();
+    const SERVER   = 'http://localhost:3000';
+    const REDIRECT = sessionStorage.getItem('redirectAfterLogin') || 'regenerer.html';
+
+    function msg(text, type) {
+      const el = document.getElementById('authMsg');
+      el.textContent = text;
+      el.className = 'auth-msg ' + type;
+    }
+    function clearMsg() { document.getElementById('authMsg').className = 'auth-msg'; }
+
+    function errFr(code) {
+      return ({ 'auth/user-not-found':'Aucun compte avec cet email.', 'auth/wrong-password':'Mot de passe incorrect.', 'auth/email-already-in-use':'Email déjà utilisé.', 'auth/invalid-email':'Email invalide.', 'auth/weak-password':'Mot de passe trop faible.', 'auth/too-many-requests':'Trop de tentatives. Réessayez plus tard.', 'auth/popup-closed-by-user':'Connexion Google annulée.' })[code] || 'Une erreur est survenue.';
+    }
+
+    async function sendOTP(email) {
+      const r = await fetch(`${SERVER}/api/send-otp`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email }) });
+      return r.json();
+    }
+    async function verifyOTP(email, otp) {
+      const r = await fetch(`${SERVER}/api/verify-otp`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email, otp }) });
+      return r.json();
+    }
+
+    window.login = async () => {
+      clearMsg();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pw    = document.getElementById('loginPassword').value;
+      if (!email || !pw) { msg('Remplissez tous les champs.', 'error'); return; }
+      const btn = document.getElementById('btnLogin');
+      btn.disabled = true; btn.textContent = '⏳ Connexion...';
+      try {
+        await signInWithEmailAndPassword(auth, email, pw);
+        msg('Connexion réussie !', 'success');
+        setTimeout(() => window.location.href = REDIRECT, 800);
+      } catch(e) { msg(errFr(e.code), 'error'); btn.disabled=false; btn.textContent='Se connecter'; }
+    };
+
+    window.loginGoogle = async () => {
+      try { await signInWithPopup(auth, gProvider); window.location.href = REDIRECT; }
+      catch(e) { msg(errFr(e.code), 'error'); }
+    };
+
+    window.sendRegisterOTP = async () => {
+      clearMsg();
+      const name=document.getElementById('regName').value.trim(), email=document.getElementById('regEmail').value.trim();
+      const pw=document.getElementById('regPassword').value, birth=document.getElementById('regBirth').value;
+      const country=document.getElementById('regCountry').value.trim(), question=document.getElementById('regQuestion').value.trim();
+      const answer=document.getElementById('regAnswer').value.trim();
+      if (!name||!email||!pw||!birth||!country||!question||!answer) { msg('Remplissez tous les champs.','error'); return; }
+      if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { msg('Email invalide.','error'); return; }
+      if (pw.length<6) { msg('Mot de passe trop court (min 6 caractères).','error'); return; }
+      try {
+        const d = await sendOTP(email);
+        if (!d.success) { msg(d.error,'error'); return; }
+        document.getElementById('otpEmailDisplay').textContent = email;
+        window.showStep('register',2);
+        window.startTimer();
+        msg('Code envoyé ! Vérifiez votre boîte email.','success');
+      } catch { msg('Erreur serveur. Vérifiez que le serveur tourne.','error'); }
+    };
+
+    window.verifyOTPAndRegister = async () => {
+      clearMsg();
+      const otp = window.getOTP('otp-box');
+      if (otp.length!==4) { msg('Entrez les 4 chiffres.','error'); return; }
+      const email=document.getElementById('regEmail').value.trim(), pw=document.getElementById('regPassword').value;
+      const name=document.getElementById('regName').value.trim(), birth=document.getElementById('regBirth').value;
+      const country=document.getElementById('regCountry').value.trim(), question=document.getElementById('regQuestion').value.trim();
+      const answer=document.getElementById('regAnswer').value.trim().toLowerCase();
+      try {
+        const v = await verifyOTP(email, otp);
+        if (!v.success) { msg(v.error,'error'); return; }
+        const cred = await createUserWithEmailAndPassword(auth, email, pw);
+        await updateProfile(cred.user, { displayName: name });
+        await setDoc(doc(db,'users',cred.user.uid), { name, email, birth, country, question, answer, createdAt: new Date() });
+        msg('Compte créé ! Redirection...','success');
+        setTimeout(() => window.location.href = REDIRECT, 1000);
+      } catch(e) { msg(errFr(e.code)||'Erreur. Réessayez.','error'); }
+    };
+
+    window.sendForgotOTP = async () => {
+      clearMsg();
+      const email = document.getElementById('forgotEmail').value.trim();
+      if (!email||!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { msg('Entrez un email valide.','error'); return; }
+      try {
+        const d = await sendOTP(email);
+        if (!d.success) { msg(d.error,'error'); return; }
+        document.getElementById('forgotEmailDisplay').textContent = email;
+        window.showStep('forgot',2);
+        msg('Code envoyé !','success');
+      } catch { msg('Erreur serveur.','error'); }
+    };
+
+    window.verifyForgotOTP = async () => {
+      clearMsg();
+      const otp=window.getOTP('otp-box-f'), email=document.getElementById('forgotEmail').value.trim();
+      if (otp.length!==4) { msg('Entrez les 4 chiffres.','error'); return; }
+      try {
+        const v = await verifyOTP(email, otp);
+        if (!v.success) { msg(v.error,'error'); return; }
+        window.showStep('forgot',3);
+        msg('Code vérifié ! Choisissez un nouveau mot de passe.','success');
+      } catch { msg('Erreur serveur.','error'); }
+    };
+
+    window.doUpdatePassword = async () => {
+      clearMsg();
+      const newPw=document.getElementById('newPassword').value, conf=document.getElementById('confirmPassword').value;
+      if (newPw.length<6) { msg('Minimum 6 caractères.','error'); return; }
+      if (newPw!==conf)   { msg('Les mots de passe ne correspondent pas.','error'); return; }
+      try {
+        const email=document.getElementById('forgotEmail').value.trim();
+        const cred = await signInWithEmailAndPassword(auth, email, newPw).catch(()=>null);
+        if (cred) await fbUpdatePw(cred.user, newPw);
+        msg('Mot de passe mis à jour !','success');
+        setTimeout(()=>window.switchMode('login'),1500);
+      } catch { msg('Erreur. Réessayez.','error'); }
+    };
+
+    window.resendOTP = async () => {
+      const email = document.getElementById('regEmail').value.trim();
+      if (!email) return;
+      try { await sendOTP(email); msg('Nouveau code envoyé !','success'); window.startTimer(); }
+      catch { msg('Erreur.','error'); }
+    };
+  </script>
+
+  <script>
+    window.switchMode = (mode) => {
+      ['login','register','forgot'].forEach(m => document.getElementById('mode-'+m).style.display = m===mode?'block':'none');
+      document.getElementById('tabLogin').classList.toggle('active', mode==='login');
+      document.getElementById('tabRegister').classList.toggle('active', mode==='register');
+      document.getElementById('authMsg').className = 'auth-msg';
+    };
+
+    window.showStep = (mode, n) => {
+      document.querySelectorAll(`#mode-${mode} .auth-step`).forEach((s,i) => s.classList.toggle('active', i+1===n));
+    };
+
+    window.otpInput = (input, idx, type='') => {
+      const cls = type==='f' ? '.otp-box-f' : '.otp-box';
+      const boxes = document.querySelectorAll(cls);
+      input.value = input.value.toString().slice(-1);
+      input.classList.toggle('filled', input.value!=='');
+      if (input.value && idx<3) boxes[idx+1].focus();
+    };
+
+    window.getOTP = (cls) => Array.from(document.querySelectorAll('.'+cls)).map(i=>i.value).join('');
+
+    let timerInt;
+    window.startTimer = () => {
+      let s=60;
+      const btn=document.getElementById('resendBtn'), disp=document.getElementById('timerDisplay');
+      btn.className='disabled'; clearInterval(timerInt);
+      timerInt=setInterval(()=>{ s--; disp.innerHTML=`<span class="timer">(${s}s)</span>`; if(s<=0){clearInterval(timerInt);btn.className='';disp.innerHTML='';} },1000);
+    };
+
+    window.togglePw = (id, btn) => {
+      const el=document.getElementById(id);
+      el.type=el.type==='password'?'text':'password';
+      btn.textContent=el.type==='password'?'👁':'🙈';
+    };
+
+    window.checkStrength = (v) => {
+      const f=document.getElementById('strengthFill');
+      let s=0;
+      if(v.length>=6)s++; if(v.length>=10)s++; if(/[A-Z]/.test(v))s++; if(/[0-9]/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
+      f.style.width=(s*20)+'%';
+      f.style.background=['#eee','#e53e3e','#f6ad55','#68d391','#3dbd8a','#3dbd8a'][s];
+    };
+  </script>
+</body>
+</html>

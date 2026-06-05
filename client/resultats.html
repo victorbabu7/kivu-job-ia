@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Résultats — Kivu Job IA</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="page-light">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-light">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">💼 Kivu<span> Job IA</span></a>
+      <ul class="nav-links">
+        <li><a href="analyse.html">← Nouvelle analyse</a></li>
+      </ul>
+      <a href="analyse.html" class="btn-cta">Nouvelle analyse</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <span class="hero-badge">Étape 2 sur 3</span>
+      <h1>Résultats de votre analyse</h1>
+      <p>Voici ce que l'IA a trouvé en comparant votre CV à l'offre d'emploi.</p>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-steps">
+    <div class="container">
+      <div class="steps-bar">
+        <div class="sbar-step done">
+          <div class="sbar-dot">✓</div>
+          <span>Soumettre</span>
+        </div>
+        <div class="sbar-line active-line"></div>
+        <div class="sbar-step active">
+          <div class="sbar-dot">2</div>
+          <span>Résultats</span>
+        </div>
+        <div class="sbar-line"></div>
+        <div class="sbar-step">
+          <div class="sbar-dot">3</div>
+          <span>CV Final</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div class="loading-state" id="loadingState">
+    <div class="container">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <h3>L'IA analyse votre CV...</h3>
+        <p>Comparaison avec l'offre, détection des compétences, génération des conseils — moins de 30 secondes.</p>
+        <div class="loading-steps">
+          <div class="lstep active" id="ls1">📄 Lecture du CV</div>
+          <div class="lstep" id="ls2">🎯 Comparaison avec l'offre</div>
+          <div class="lstep" id="ls3">📊 Calcul du score</div>
+          <div class="lstep" id="ls4">💡 Génération des conseils</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS (caché jusqu'à la réponse) -->
+  <div class="results-state hidden" id="resultsState">
+    <div class="container">
+
+      <!-- SCORE -->
+      <div class="score-section">
+        <div class="score-card">
+          <div class="score-circle" id="scoreCircle">
+            <span id="scoreValue">--</span>
+            <small>/ 100</small>
+          </div>
+          <div class="score-info">
+            <h2>Score de compatibilité</h2>
+            <p id="scoreComment">--</p>
+            <div class="score-bar-wrap">
+              <div class="score-bar-bg">
+                <div class="score-bar-fill" id="scoreBar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATCH / PAS MATCH -->
+      <div class="match-grid">
+        <div class="match-col green-col">
+          <h3>✅ Ce qui correspond</h3>
+          <ul id="matchList"></ul>
+        </div>
+        <div class="match-col red-col">
+          <h3>❌ Ce qui manque</h3>
+          <ul id="missingList"></ul>
+        </div>
+      </div>
+
+      <!-- CONSEILS + RESSOURCES -->
+      <div class="advice-section">
+        <h2>💡 Conseils personnalisés & Ressources</h2>
+        <p class="section-sub">Pour chaque compétence manquante, voici comment l'acquérir</p>
+        <div id="adviceList"></div>
+      </div>
+
+      <!-- DEMARCHE -->
+      <div class="demarche-section">
+        <h2>🗺️ Démarche à suivre</h2>
+        <p class="section-sub">Étapes concrètes pour être prêt pour ce poste</p>
+        <div id="demarcheList"></div>
+      </div>
+
+      <!-- CTA REGENERER -->
+      <div class="regen-section">
+        <div class="regen-card">
+          <div>
+            <h2>✨ Voulez-vous que l'IA réorganise votre CV ?</h2>
+            <p>L'IA va réécrire et optimiser votre CV pour qu'il colle parfaitement à cette offre.</p>
+          </div>
+          <div class="regen-btns">
+            <button class="btn-primary large" id="btnRegen">Oui, régénérer mon CV</button>
+            <a href="analyse.html" class="btn-ghost-dark">Nouvelle analyse</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div class="error-state hidden" id="errorState">
+    <div class="container">
+      <div class="error-card">
+        <div class="error-icon">⚠️</div>
+        <h3>Une erreur s'est produite</h3>
+        <p id="errorMsg">Impossible de contacter le serveur.</p>
+        <a href="analyse.html" class="btn-primary">Réessayer</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/resultats.js"></script>
+</body>
+</html>

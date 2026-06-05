@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>CV — {{NOM_COMPLET}}</title>
+<style>
+  /* FONTS */
+  body {
+    font-family: Calibri, 'Gill Sans', Arial, sans-serif;
+    margin: 0;
+    background: #fff;
+    color: #222;
+    font-size: 13px;
+  }
+
+  /* PHOTO / TITLE TOGGLE */
+  .no-photo .photo-section {
+    display: none;
+  }
+
+  .no-title .cv-subtitle {
+    display: none;
+  }
+
+  /* PAGE */
+  .cv-page {
+    max-width: 794px;
+    margin: 0 auto;
+    padding: 36px 44px;
+  }
+
+  /* HEADER */
+  .cv-header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    border-bottom: 3px solid #2c3e50;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+
+  .photo-section img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2c3e50;
+  }
+
+  .header-info h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cv-subtitle {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: #444;
+  }
+
+  .contact-row span::before {
+    margin-right: 4px;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1.5px solid #2c3e50;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+  }
+
+  /* EXPERIENCE / FORMATION */
+  .item {
+    margin-bottom: 12px;
+  }
+
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .item-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 13px;
+  }
+
+  .item-date {
+    font-size: 11px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .item-sub {
+    font-size: 12px;
+    color: #555;
+    margin: 2px 0;
+    font-style: italic;
+  }
+
+  .item-desc {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.55;
+    margin-top: 4px;
+  }
+
+  .item-desc ul {
+    margin: 4px 0 0 16px;
+    padding: 0;
+  }
+
+  .item-desc li {
+    margin-bottom: 2px;
+  }
+
+  /* COMPÉTENCES */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 20px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .skill-name {
+    min-width: 110px;
+  }
+
+  .skill-bar {
+    flex: 1;
+    height: 5px;
+    background: #e0e0e0;
+    border-radius: 3px;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: #2c3e50;
+    border-radius: 3px;
+  }
+
+  /* LANGUES */
+  .lang-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .lang-item {
+    font-size: 12px;
+  }
+
+  .lang-item strong {
+    color: #2c3e50;
+  }
+
+  /* 2 COLONNES */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media print {
+    body {
+      margin: 0;
+    }
+
+    .cv-page {
+      padding: 20px 30px;
+    }
+  }
+</style>
+</head>
+<body class="{{PHOTO_CLASS}} {{TITLE_CLASS}}">
+<div class="cv-page">
+
+  <!-- HEADER -->
+  <header class="cv-header">
+    <div class="photo-section">
+      <img src="{{PHOTO_URL}}" alt="Photo de {{NOM_COMPLET}}"/>
+    </div>
+    <div class="header-info">
+      <h1>{{NOM_COMPLET}}</h1>
+      <p class="cv-subtitle">{{TITRE_POSTE}}</p>
+      <div class="contact-row">
+        <span>✉ {{EMAIL}}</span>
+        <span>📞 {{TELEPHONE}}</span>
+        <span>📍 {{LOCALISATION}}</span>
+        {{#if LINKEDIN}}<span>🔗 {{LINKEDIN}}</span>{{/if}}
+      </div>
+    </div>
+  </header>
+
+  <!-- RÉSUMÉ -->
+  {{#if RESUME_PRO}}
+  <div class="section">
+    <div class="section-title">Profil professionnel</div>
+    <p style="font-size:12.5px;line-height:1.6;color:#333;">{{RESUME_PRO}}</p>
+  </div>
+  {{/if}}
+
+  <!-- EXPÉRIENCES -->
+  <div class="section">
+    <div class="section-title">Expériences professionnelles</div>
+    {{EXPERIENCES}}
+  </div>
+
+  <!-- FORMATION -->
+  <div class="section">
+    <div class="section-title">Formation</div>
+    {{FORMATIONS}}
+  </div>
+
+  <!-- COMPÉTENCES + LANGUES -->
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title">Compétences</div>
+      <div class="skills-grid">{{COMPETENCES}}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Langues</div>
+      <div class="lang-row">{{LANGUES}}</div>
+      {{#if CERTIFICATIONS}}
+      <div class="section-title" style="margin-top:14px">Certifications</div>
+      {{CERTIFICATIONS}}
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if INTERETS}}
+  <div class="section">
+    <div class="section-title">Centres d'intérêt</div>
+    <p style="font-size:12px;color:#555;">{{INTERETS}}</p>
+  </div>
+  {{/if}}
+
+</div>
+</body>
+</html>
