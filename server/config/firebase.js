@@ -3,11 +3,11 @@ require('dotenv').config();
 
 let serviceAccount;
 
-if (process.env.FIREBASE_KEY_JSON) {
-  // Production (Render) — clé dans variable d'environnement
-  serviceAccount = JSON.parse(process.env.FIREBASE_KEY_JSON);
+if (process.env.NODE_ENV === 'production') {
+  // Sur Render — lit le fichier secret
+  serviceAccount = require('/etc/secrets/firebase.json');
 } else {
-  // Local — clé dans le fichier JSON
+  // En local — lit le fichier JSON
   const path = require('path');
   serviceAccount = require(path.resolve(__dirname, '..', process.env.FIREBASE_KEY_PATH));
 }
