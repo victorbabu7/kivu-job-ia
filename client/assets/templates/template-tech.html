@@ -199,10 +199,12 @@
   }
 
   @media print {
-    body {
-      background: #fff;
-      color: #000;
-    }
+  body { margin: 0; }
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
 
     .cv-header {
       background: #f0f0f0;

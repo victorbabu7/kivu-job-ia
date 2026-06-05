@@ -171,14 +171,12 @@
   }
 
   @media print {
-    body {
-      margin: 0;
-    }
-
-    .cv-page {
-      padding: 28px 36px;
-    }
+  body { margin: 0; }
+  @page {
+    margin: 0;
+    size: A4;
   }
+}
 </style>
 </head>
 <body class="{{PHOTO_CLASS}} {{TITLE_CLASS}}">

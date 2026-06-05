@@ -192,7 +192,7 @@ async function genererCV() {
   document.getElementById('btnGenerer').disabled = true;
 
   try {
-    const res = await fetch('/api/regenerate', {
+    const res = await fetch('https://kivu-job-ia.onrender.com/api/regenerate', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(data)
@@ -225,7 +225,7 @@ function telechargerPDF() {
 async function telechargerDOCX() {
   const data = JSON.parse(sessionStorage.getItem('cvGenere') || '{}');
   try {
-    const res  = await fetch('/api/export-docx', {
+    const res  = await fetch('https://kivu-job-ia.onrender.com/api/export-docx', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(data)

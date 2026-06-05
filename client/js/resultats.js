@@ -19,7 +19,7 @@ const stepInterval = setInterval(() => {
 // ===== Appel API =====
 async function analyser() {
   try {
-    const res  = await fetch('/api/analyze', {
+    const res  = await fetch('https://kivu-job-ia.onrender.com/api/analyze', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ cv, offre })

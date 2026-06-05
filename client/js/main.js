@@ -19,7 +19,7 @@ if (form) {
     const btn = form.querySelector('.btn-send span');
     btn.textContent = '⏳ Envoi en cours...';
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://kivu-job-ia.onrender.com/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -174,7 +174,7 @@ if (document.getElementById('btnAnalyse')) {
         formData.append('offreText', offreText);
       }
 
-      const res = await fetch('/api/extract',{
+      const res = await fetch('https://kivu-job-ia.onrender.com/api/extract',{
         method: 'POST',body: formData });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Erreur extraction');

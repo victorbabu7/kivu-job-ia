@@ -178,11 +178,13 @@
     margin-bottom: 2px;
   }
 
-  @media print {
-    body {
-      margin: 0;
-    }
+@media print {
+  body { margin: 0; }
+  @page {
+    margin: 0;
+    size: A4;
   }
+}
 </style>
 </head>
 <body class="{{PHOTO_CLASS}} {{TITLE_CLASS}}">
